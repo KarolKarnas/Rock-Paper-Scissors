@@ -1,105 +1,104 @@
+// Queries
+
+let resultPhrase = document.querySelector('#resultPhrase');
+let compChoicePrint = document.querySelector('#compChoice');
+let userChoicePrint = document.querySelector('#userChoice');
+let compScorePrint = document.querySelector('#compScore');
+let userScorePrint = document.querySelector('#userScore');
+let wonMessage = document.querySelector('#wonMessage');
+
 // get random computer choice 'rock', 'paper', 'scissors'
 
 function getComputerChoice() {
 	let compArr = ['rock', 'paper', 'scissors'];
 	let compMathRandom = Math.floor(Math.random() * 3);
 	let compChoice = compArr[compMathRandom];
-	console.log(`COMP: ${compChoice}`);
+	compChoicePrint.textContent = compChoice;
 	return compChoice;
 }
 
 // get the player choice
 
-function getPlayerChoice() {
-	let userChoice = prompt(
-		'Type your favorite weapon: rock, paper or scissors'
-	).toLowerCase();
+const buttons = document.querySelectorAll('button');
 
-	//try to call again function if the userChoice is different than
-	// 'rock' or 'paper' or 'scissors'
-	// the problem it always returns all the values and generate the tie, probably undefined value
+buttons.forEach((button) => {
+	button.addEventListener('click', () => {
+		let userChoice = button.id;
+		userChoicePrint.textContent = userChoice;
+		playRound(userChoice, getComputerChoice());
+	});
+});
 
-	// if (userChoice !== 'rock' && userChoice !== 'paper' && userChoice !== 'scissors') {
-	// 	alert('You write something wrong, try again');
-	// 	getPlayerChoice();
-	// }
+//messages
 
-	console.log(`USER: ${userChoice}`);
-	return userChoice;
-}
-
-// variables with possible outcomes of the 1 round of the game
-// removed from singleRound function for scope of
-
-let tie = "It's a tie!";
+let tie = "It's a tie! NO ONE get scored! Try again!";
 let rockLose = 'You Lose! Paper beats Rock!';
 let rockWin = 'You Won! Rock beats Scissors';
 let scissorsLose = 'You Lose! Rock beats Scissors';
 let scissorsWin = 'You Win! Scissors beats Paper';
 let paperLose = 'You Lose! Scissors beats Paper';
 let paperWin = 'You Win! Paper beats Rock!';
+let compWon = 'Motherfucking COMP won!';
+let userWon = 'You WON!';
 
-// single round evaluation
+// score counters
+
+let userScore = 0;
+let compScore = 0;
+
+// main game function
 
 function playRound(playerSelection, computerSelection) {
+	//reset after game
+
+	wonMessage.textContent = '';
+	compScorePrint.classList.remove('green', 'red');
+	userScorePrint.classList.remove('red', 'green');
+
+	//single round evaluation, update counters
+
 	if (playerSelection === 'rock' && computerSelection === 'paper') {
-		return rockLose;
+		resultPhrase.textContent = rockLose;
+		compScore++;
 	} else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-		return rockWin;
+		resultPhrase.textContent = rockWin;
+		userScore++;
 	} else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-		return scissorsLose;
+		resultPhrase.textContent = scissorsLose;
+		compScore++;
 	} else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-		return scissorsWin;
+		resultPhrase.textContent = scissorsWin;
+		userScore++;
 	} else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-		return paperLose;
+		resultPhrase.textContent = paperLose;
+		compScore++;
 	} else if (playerSelection === 'paper' && computerSelection === 'rock') {
-		return paperWin;
+		resultPhrase.textContent = paperWin;
+		userScore++;
 	} else {
-		return tie;
+		resultPhrase.textContent = tie;
+	}
+
+	// running score
+
+	compScorePrint.textContent = compScore;
+	userScorePrint.textContent = userScore;
+
+	//game winner score evaluation
+
+	if (compScore === 5) {
+		wonMessage.textContent = `You lose the game! You are weak! Try again`;
+		wonMessage.classList.add('red');
+		compScorePrint.classList.add('green');
+		userScorePrint.classList.add('red');
+		userScore = 0;
+		compScore = 0;
+	} else if (userScore === 5) {
+		wonMessage.textContent = `You win the game! Congratulations!`;
+		wonMessage.classList.add('green');
+		compScorePrint.classList.add('red');
+		userScorePrint.classList.add('green');
+		userScore = 0;
+		compScore = 0;
 	}
 }
-
-// perform 5 times single round function
-
-function game() {
-	// store score variables of the game
-	let userScore = 0;
-	let compScore = 0;
-	// possible finish game strings
-	let userWinGame = 'You win the game! Congratulations!';
-	let compWinGame = 'You lose the game! You are weak! Try again';
-	let tieGame = 'It is a tie! Try again!!!';
-
-	for (let i = 0; i < 5; i++) {
-		let resultSingleRound = playRound(getPlayerChoice(), getComputerChoice());
-		if (
-			resultSingleRound === rockWin ||
-			resultSingleRound === scissorsWin ||
-			resultSingleRound === paperWin
-		) {
-			userScore++;
-		} else if (
-			resultSingleRound === rockLose ||
-			resultSingleRound === scissorsLose ||
-			resultSingleRound === paperLose
-		) {
-			compScore++;
-		}
-		console.log(`This round result: ${resultSingleRound}`);
-		console.log(`Total score, USER: ${userScore} COMP: ${compScore}`);
-	}
-
-	//final score evaluation
-
-	if (userScore > compScore) {
-		console.log(userWinGame);
-	} else if (userScore < compScore) {
-		console.log(compWinGame);
-	} else {
-		console.log(tieGame);
-	}
-}
-
-game();
-
-// console.log(singleRound('rock', getComputerChoice()));

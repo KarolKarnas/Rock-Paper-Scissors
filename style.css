@@ -1,0 +1,15 @@
+#result {
+margin-top: 20px;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+#wonMessage {
+    font-size: 40px;
+}
