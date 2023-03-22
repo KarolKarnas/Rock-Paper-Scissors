@@ -1,18 +1,18 @@
 // Queries
 
-let resultPhrase = document.querySelector('#resultPhrase');
-let compChoicePrint = document.querySelector('#compChoice');
-let userChoicePrint = document.querySelector('#userChoice');
-let compScorePrint = document.querySelector('#compScore');
-let userScorePrint = document.querySelector('#userScore');
-let wonMessage = document.querySelector('#wonMessage');
+const resultPhrase = document.querySelector('#resultPhrase');
+const compChoicePrint = document.querySelector('#compChoice');
+const userChoicePrint = document.querySelector('#userChoice');
+const compScorePrint = document.querySelector('#compScore');
+const userScorePrint = document.querySelector('#userScore');
+const wonMessage = document.querySelector('#wonMessage');
 
 // get random computer choice 'rock', 'paper', 'scissors'
 
+const compArr = ['rock', 'paper', 'scissors'];
 function getComputerChoice() {
-	let compArr = ['rock', 'paper', 'scissors'];
-	let compMathRandom = Math.floor(Math.random() * 3);
-	let compChoice = compArr[compMathRandom];
+	const compMathRandom = Math.floor(Math.random() * 3);
+	const compChoice = compArr[compMathRandom];
 	compChoicePrint.textContent = compChoice;
 	return compChoice;
 }
@@ -31,15 +31,15 @@ buttons.forEach((button) => {
 
 //messages
 
-let tie = "It's a tie! NO ONE get scored! Try again!";
-let rockLose = 'You Lose! Paper beats Rock!';
-let rockWin = 'You Won! Rock beats Scissors';
-let scissorsLose = 'You Lose! Rock beats Scissors';
-let scissorsWin = 'You Win! Scissors beats Paper';
-let paperLose = 'You Lose! Scissors beats Paper';
-let paperWin = 'You Win! Paper beats Rock!';
-let compWon = 'Motherfucking COMP won!';
-let userWon = 'You WON!';
+const tie = "It's a tie! NO ONE get scored! Try again!";
+const rockLose = 'You Lose! Paper beats Rock!';
+const rockWin = 'You Won! Rock beats Scissors';
+const scissorsLose = 'You Lose! Rock beats Scissors';
+const scissorsWin = 'You Win! Scissors beats Paper';
+const paperLose = 'You Lose! Scissors beats Paper';
+const paperWin = 'You Win! Paper beats Rock!';
+const compWon = 'Motherfucking COMP won!';
+const userWon = 'You WON!';
 
 // score counters
 
